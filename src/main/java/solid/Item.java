@@ -1,7 +1,7 @@
 package solid;
 
 
-//Заглушка класса товаров в заказе
+// Stub for Item class in Order
 public class Item {
     private String name;
 

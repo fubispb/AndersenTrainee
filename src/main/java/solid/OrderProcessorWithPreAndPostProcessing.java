@@ -1,11 +1,17 @@
 package solid;
 
-//Open Closed Principle
-//Расширяем класс OrderProcessor пре- и пост- обработкой
+// Open Closed Principle
+// Extending the OrderProcessor class with pre - and post - processing
 public class OrderProcessorWithPreAndPostProcessing extends OrderProcessor {
 
     public OrderProcessorWithPreAndPostProcessing(MailSender mailSender, OrderRepository repository) {
         super(mailSender, repository);
+    }
+
+    private void beforeProcessing() {
+    }
+
+    private void afterProcessing() {
     }
 
     @Override
@@ -13,13 +19,5 @@ public class OrderProcessorWithPreAndPostProcessing extends OrderProcessor {
         beforeProcessing();
         super.process(order);
         afterProcessing();
-    }
-
-    private void beforeProcessing() {
-        // Осуществим некоторые действия перед обработкой заказа
-    }
-
-    private void afterProcessing() {
-        // Осуществим некоторые действия после обработки заказа
     }
 }

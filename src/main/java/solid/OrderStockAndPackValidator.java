@@ -1,7 +1,7 @@
 package solid;
 
-//Liskov’s Substitution Principle
-//Расширяя валидатор нельзя вместо возврата false начать бросать исключение
+// Liskov’s Substitution Principle
+// Extending the validator you can't start throwing an exception instead of returning false
 public class OrderStockAndPackValidator extends OrderStockValidator {
 
     @Override
@@ -9,9 +9,6 @@ public class OrderStockAndPackValidator extends OrderStockValidator {
         for (Item item : order.getItems()) {
             if (!item.isInStock() || !item.isPacked()) {
                 return false;
-                //throw new IllegalStateException(
-                //        String.format("Order %d is not valid!", order.getId())
-                //);
             }
         }
 

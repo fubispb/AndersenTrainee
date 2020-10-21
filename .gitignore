@@ -12,6 +12,7 @@
 
 # Ignore the node_modules directory
 .idea/
+*.iml
 
 # Package Files #
 *.jar

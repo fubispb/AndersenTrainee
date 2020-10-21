@@ -1,12 +1,12 @@
 package solid;
 
 
-//Заглушка класса Заказ
+// Stub for Order class
 public class Order {
-    private long id;
-    private int count;
-    private String customerName;
-    private String customerEmail;
+    private final long id;
+    private final int count;
+    private final String customerName;
+    private final String customerEmail;
 
     public Order(long id, int count, String customerName, String customerEmail) {
         this.id = id;

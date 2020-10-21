@@ -1,8 +1,8 @@
 package solid;
 
 
-//Interface Segregation Principle
-//Разделяем 1 общий интерфейс на 2 интерфейса отправки подтверждения и сохранения
+// Interface Segregation Principle
+// Separate 1 common interface into 2 send and confirm interfaces
 public interface OrderRepository {
 
     boolean save(Order order);

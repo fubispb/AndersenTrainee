@@ -1,6 +1,6 @@
 package solid;
 
-//Валидатор все ли товары заказа находятся на складе
+// Validator whether all the order items are in stock
 public class OrderStockValidator {
 
     public boolean isValid(Order order) {

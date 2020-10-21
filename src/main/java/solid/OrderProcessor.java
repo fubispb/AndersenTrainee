@@ -1,11 +1,11 @@
 package solid;
 
 
-//Заглушка класса Обработка Заказа
+// Stub for OrderProcessor class
 public class OrderProcessor {
 
-    private MailSender mailSender;
-    private OrderRepository repository;
+    private final MailSender mailSender;
+    private final OrderRepository repository;
 
     public OrderProcessor(MailSender mailSender, OrderRepository repository) {
         this.mailSender = mailSender;
