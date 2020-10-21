@@ -12,7 +12,7 @@ public class MementoPattern {
         game.set("LVL_2", 55000);
         System.out.println(game);
 
-        System.out.println("загружаемся");
+        System.out.println("loading");
         game.load(file.getSave());
         System.out.println(game);
     }
@@ -61,7 +61,7 @@ class Save {
 }
 
 class File {
-    Save save;
+    private Save save;
 
     public Save getSave() {
         return save;

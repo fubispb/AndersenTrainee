@@ -24,8 +24,8 @@ interface Observed{
     void notifyObservers();
 }
 class MeteoStation implements Observed{
-    int temperature;
-    int pressure;
+    private int temperature;
+    private int pressure;
 
     List<Observer> observers = new ArrayList<>();
 
@@ -54,7 +54,7 @@ interface Observer{
 
 class ConsoleObserver implements Observer{
     public void handleEvent(int temp, int presser) {
-        System.out.println("Погода изменилась. Температура = " + temp + ", Давление = " + presser +".");
+        System.out.println("Weather changes. Temperature = " + temp + ", Pressure = " + presser +".");
     }
 }
 class FileObserver implements Observer{
@@ -63,7 +63,7 @@ class FileObserver implements Observer{
         try {
             f = File.createTempFile("TempPressure", "_txt");
             PrintWriter pw = new PrintWriter(f);
-            pw.print("Погода изменилась. Температура = " + temp + ", Давление = " + presser +".");
+            pw.print("Weather changes. Temperature = " + temp + ", Pressure = " + presser +".");
             pw.println();
             pw.close();
 

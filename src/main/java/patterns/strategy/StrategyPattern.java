@@ -22,7 +22,7 @@ public class StrategyPattern {
 }
 
 class StrategyClient {
-    Sorting strategy;
+    private Sorting strategy;
 
     public void setStrategy(Sorting strategy) {
         this.strategy = strategy;
@@ -37,11 +37,11 @@ interface Sorting {
     void sort(int[] arr);
 }
 
-//Bubble sorting strategy (Сортировка пузырьком)
+// Bubble sorting strategy
 class BubbleSort implements Sorting {
     public void sort(int[] arr) {
-        System.out.println("Сортировка пузырьком");
-        System.out.println("до:\t" + Arrays.toString(arr));
+        System.out.println("Bubble sorting");
+        System.out.println("before:\t" + Arrays.toString(arr));
         for (int barier = arr.length - 1; barier >= 0; barier--) {
             for (int i = 0; i < barier; i++) {
                 if (arr[i] > arr[i + 1]) {
@@ -51,15 +51,15 @@ class BubbleSort implements Sorting {
                 }
             }
         }
-        System.out.println("после:\t" + Arrays.toString(arr));
+        System.out.println("after:\t" + Arrays.toString(arr));
     }
 }
 
-//Selection sorting strategy (Сортировка выборками)
+// Selection sorting strategy
 class SelectionSort implements Sorting {
     public void sort(int[] arr) {
-        System.out.println("Сортировка выборками");
-        System.out.println("до:\t" + Arrays.toString(arr));
+        System.out.println("Selection sorting");
+        System.out.println("before:\t" + Arrays.toString(arr));
         for (int barier = 0; barier < arr.length - 1; barier++) {
             for (int i = barier + 1; i < arr.length; i++) {
                 if (arr[i] < arr[barier]) {
@@ -70,15 +70,15 @@ class SelectionSort implements Sorting {
                 }
             }
         }
-        System.out.println("после:\t" + Arrays.toString(arr));
+        System.out.println("after:\t" + Arrays.toString(arr));
     }
 }
 
-//Inserting sorting strategy (Сортировка вставками)
+// Inserting sorting strategy
 class InsertingSort implements Sorting {
     public void sort(int[] arr) {
-        System.out.println("Сортировка вставками");
-        System.out.println("до:\t" + Arrays.toString(arr));
+        System.out.println("Inserting sorting");
+        System.out.println("before:\t" + Arrays.toString(arr));
         for (int barier = 1; barier < arr.length; barier++) {
             int index = barier;
             while (index - 1 >= 0 && arr[index] < arr[index - 1]) {
@@ -88,7 +88,7 @@ class InsertingSort implements Sorting {
                 index--;
             }
         }
-        System.out.println("после:\t" + Arrays.toString(arr));
+        System.out.println("after:\t" + Arrays.toString(arr));
     }
 }
 

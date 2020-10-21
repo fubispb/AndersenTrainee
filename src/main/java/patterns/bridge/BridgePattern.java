@@ -12,7 +12,7 @@ public class BridgePattern {
 }
 
 abstract class Car {
-    Make make;
+    protected Make make;
 
     public Car(Make m) {
         make = m;

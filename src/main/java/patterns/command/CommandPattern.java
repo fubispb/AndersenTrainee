@@ -35,7 +35,7 @@ class Comp {
 
 //ConcreteCommand
 class StartCommand implements Command {
-    Comp computer;
+    private final Comp computer;
 
     public StartCommand(Comp computer) {
         this.computer = computer;
@@ -49,7 +49,7 @@ class StartCommand implements Command {
 
 //ConcreteCommand
 class StopCommand implements Command {
-    Comp computer;
+    private final Comp computer;
 
     public StopCommand(Comp computer) {
         this.computer = computer;
@@ -63,7 +63,7 @@ class StopCommand implements Command {
 
 //ConcreteCommand
 class ResetCommand implements Command {
-    Comp computer;
+    private final Comp computer;
 
     public ResetCommand(Comp computer) {
         this.computer = computer;
@@ -77,9 +77,9 @@ class ResetCommand implements Command {
 
 //Invoker
 class User {
-    Command start;
-    Command stop;
-    Command reset;
+    private final Command start;
+    private final Command stop;
+    private final Command reset;
 
     public User(Command start, Command stop, Command reset) {
         this.start = start;

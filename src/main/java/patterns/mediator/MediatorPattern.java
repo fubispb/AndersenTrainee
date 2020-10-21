@@ -9,10 +9,10 @@ public class MediatorPattern {
 
         TextChat chat = new TextChat();
 
-        User admin = new Admin(chat, "Иван Иваныч");
-        User u1 = new SimpleUser(chat, "Ваня");
-        User u2 = new SimpleUser(chat, "Вова");
-        User u3 = new SimpleUser(chat, "Саша");
+        User admin = new Admin(chat, "Ivan Ivanovich");
+        User u1 = new SimpleUser(chat, "Ivan");
+        User u2 = new SimpleUser(chat, "Vova");
+        User u3 = new SimpleUser(chat, "Alex");
         u2.setEnable(false);
 
         chat.setAdmin(admin);
@@ -20,37 +20,37 @@ public class MediatorPattern {
         chat.addUser(u2);
         chat.addUser(u3);
 
-        admin.sendMessage("Привет");
+        admin.sendMessage("Hello");
     }
 }
 
 abstract class User {
-    Chat chat;
-    String name;
-    boolean isEnable = true;
+    protected Chat chat;
+    protected String name;
+    protected boolean isEnable = true;
 
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
-    }
+    abstract void getMessage(String message);
 
     public User(Chat chat, String name) {
         this.chat = chat;
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public boolean isEnable() {
+        return isEnable;
     }
 
     public void sendMessage(String message) {
         chat.sendMessage(message, this);
     }
 
-    abstract void getMessage(String message);
+    public void setEnable(boolean isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
@@ -84,26 +84,26 @@ interface Chat {
 }
 
 class TextChat implements Chat {
-    User admin;
-    List<User> users = new ArrayList<>();
+    private User admin;
+    private final List<User> users = new ArrayList<>();
 
     public void setAdmin(User admin) {
         if (admin != null && admin instanceof Admin) {
             this.admin = admin;
         } else {
-            throw new RuntimeException("Не хватает прав");
+            throw new RuntimeException("Not enough rights.");
         }
     }
 
     public void addUser(User u) {
         if (admin == null) {
-            throw new RuntimeException("В чате нет админа!");
+            throw new RuntimeException("There is no Admin user in chat!");
         }
 
         if (u instanceof SimpleUser) {
             users.add(u);
         } else {
-            throw new RuntimeException("Админ не может входить в другой чат!");
+            throw new RuntimeException("You can't enter this chat by Admin login.");
         }
     }
 

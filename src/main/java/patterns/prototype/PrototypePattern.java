@@ -14,7 +14,7 @@ public class PrototypePattern {
         Human h1 = factory.makeCopy();
         System.out.println(h1);
 
-        factory.setPrototype(new Human(30, "Валерия"));
+        factory.setPrototype(new Human(30, "Valeriya"));
         Human h2 = factory.makeCopy();
         System.out.println(h2);
     }
@@ -25,8 +25,8 @@ interface Copyable {
 }
 
 class Human implements Copyable {
-    int age;
-    String name;
+    private final int age;
+    private final String name;
 
     public Human(int age, String name) {
         this.age = age;
@@ -44,7 +44,7 @@ class Human implements Copyable {
 }
 
 class HumanFactory {
-    Human human;
+    private Human human;
 
     public HumanFactory(Human human) {
         setPrototype(human);

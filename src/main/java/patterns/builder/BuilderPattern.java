@@ -16,9 +16,9 @@ enum Transmission {
 }
 
 class Car {
-    String make;
-    Transmission transmission;
-    int maxSpeed;
+    private String make;
+    private Transmission transmission;
+    private int maxSpeed;
 
     public void setMake(String make) {
         this.make = make;
@@ -41,17 +41,17 @@ class Car {
 }
 
 abstract class CarBuilder {
-    Car car;
-
-    void createCar() {
-        car = new Car();
-    }
+    protected Car car;
 
     abstract void buildMake();
 
     abstract void buildTransmission();
 
     abstract void buildMaxSpeed();
+
+    void createCar() {
+        car = new Car();
+    }
 
     Car getCar() {
         return car;
@@ -87,7 +87,7 @@ class SubaruBuilder extends CarBuilder {
 }
 
 class Director {
-    CarBuilder builder;
+    private CarBuilder builder;
 
     void setBuilder(CarBuilder b) {
         builder = b;

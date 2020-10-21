@@ -17,7 +17,7 @@ interface Expression {
 }
 
 class NumberExpression implements Expression {
-    int number;
+    private final int number;
 
     public NumberExpression(int number) {
         this.number = number;
@@ -30,8 +30,8 @@ class NumberExpression implements Expression {
 }
 
 class MinusExpression implements Expression {
-    Expression left;
-    Expression right;
+    private final Expression left;
+    private final Expression right;
 
     public MinusExpression(Expression left, Expression right) {
         this.left = left;
@@ -44,8 +44,8 @@ class MinusExpression implements Expression {
 }
 
 class PlusExpression implements Expression {
-    Expression left;
-    Expression right;
+    private final Expression left;
+    private final Expression right;
 
     public PlusExpression(Expression left, Expression right) {
         this.left = left;

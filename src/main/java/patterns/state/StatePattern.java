@@ -41,7 +41,7 @@ interface Activity {
 
 class Work implements Activity {
     public void doSomething(Humann context) {
-        System.out.println("Работаем!!!");
+        System.out.println("Working!!!");
         context.setState(new WeekEnd());
     }
 }
@@ -51,9 +51,8 @@ class WeekEnd implements Activity {
 
     public void doSomething(Humann context) {
         if (count < 3) {
-            System.out.println("Отдыхаем (Zzz)");
+            System.out.println("Resting (Zzz)");
             count++;
-            //context.setState(this);
         } else {
             context.setState(new Work());
         }
@@ -68,25 +67,25 @@ interface Station {
 
 class Radio7 implements Station {
     public void play() {
-        System.out.println("Радио 7...");
+        System.out.println("Radio 7...");
     }
 }
 
 class RadioDFM implements Station {
     public void play() {
-        System.out.println("Радио DFM...");
+        System.out.println("Radio DFM...");
     }
 }
 
 class VestiFM implements Station {
     public void play() {
-        System.out.println("Вести FM...");
+        System.out.println("Vesti FM...");
     }
 }
 
 //Context
 class Radio {
-    Station station;
+    private Station station;
 
     void setStation(Station st) {
         station = st;

@@ -34,6 +34,9 @@ public class CompositePattern {
         composite.addComponent(new Triangle());
 
         composite.draw();
+        composite.removeComponent(composite1);
+        System.out.println();
+        composite.draw();
     }
 }
 
@@ -43,24 +46,24 @@ interface Shape {
 
 class Square implements Shape {
     public void draw() {
-        System.out.println("Привет, я Квадрат.");
+        System.out.println("Hi, i'm square.");
     }
 }
 
 class Triangle implements Shape {
     public void draw() {
-        System.out.println("Привет, я Треугольник.");
+        System.out.println("Him i'm triangle.");
     }
 }
 
 class Circle implements Shape {
     public void draw() {
-        System.out.println("Привет, я Круг.");
+        System.out.println("Hi, i'm round.");
     }
 }
 
 class Composite implements Shape {
-    private List<Shape> components = new ArrayList<>();
+    private final List<Shape> components = new ArrayList<>();
 
     public void addComponent(Shape component) {
         components.add(component);

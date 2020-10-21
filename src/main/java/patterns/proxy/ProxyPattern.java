@@ -16,7 +16,7 @@ interface Image {
 
 class RealImage implements Image {
 
-    String file;
+    private final String file;
 
     public RealImage(String file) {
         this.file = file;
@@ -24,19 +24,19 @@ class RealImage implements Image {
     }
 
     void load() {
-        System.out.println("Загрузка " + file);
+        System.out.println("Loading " + file);
     }
 
     @Override
     public void display() {
-        System.out.println("Просмотр " + file);
+        System.out.println("Viewing " + file);
     }
 }
 
 class ProxyImage implements Image {
 
-    String file;
-    RealImage image;
+    private final String file;
+    private RealImage image;
 
     public ProxyImage(String file){
         this.file = file;

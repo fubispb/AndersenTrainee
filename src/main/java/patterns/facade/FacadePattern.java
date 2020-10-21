@@ -10,11 +10,11 @@ public class FacadePattern {
 }
 
 class Computer {
-    Power power = new Power();
-    DVDRom dvd = new DVDRom();
-    HDD hdd = new HDD();
+    private final Power power = new Power();
+    private final DVDRom dvd = new DVDRom();
+    private final HDD hdd = new HDD();
 
-    void copy() {
+    public void copy() {
         power.on();
         dvd.load();
         hdd.copyFromDVD(dvd);
@@ -24,12 +24,12 @@ class Computer {
 }
 
 class Power {
-    void on() {
-        System.out.println("Включение питания.");
+    public void on() {
+        System.out.println("Turn on power.");
     }
 
-    void off() {
-        System.out.println("Выключение питания.");
+    public void off() {
+        System.out.println("Turn off power.");
     }
 
 }
@@ -41,17 +41,17 @@ class DVDRom {
         return data;
     }
 
-    void load() {
+    public void load() {
         data = true;
     }
 
-    void unload() {
+    public void unload() {
         data = false;
     }
 }
 
 class HDD {
-    void copyFromDVD(DVDRom dvd) {
+    public void copyFromDVD(DVDRom dvd) {
         if (dvd.hasData()) {
             System.out.println("Происходит копирование данных...");
         } else {

@@ -13,7 +13,8 @@ interface PrinterInterface {
 }
 
 class Printer implements PrinterInterface {
-    String value;
+
+    private final String value;
 
     public Printer(String value) {
         this.value = value;
@@ -25,7 +26,8 @@ class Printer implements PrinterInterface {
 }
 
 abstract class Decorator implements PrinterInterface {
-    PrinterInterface component;
+
+    protected PrinterInterface component;
 
     public Decorator(PrinterInterface component) {
         this.component = component;
@@ -38,6 +40,7 @@ abstract class Decorator implements PrinterInterface {
 }
 
 class QuotesDecorator extends Decorator {
+
     public QuotesDecorator(PrinterInterface component) {
         super(component);
     }
@@ -50,6 +53,7 @@ class QuotesDecorator extends Decorator {
 }
 
 class LeftBracketDecorator extends Decorator {
+
     public LeftBracketDecorator(PrinterInterface component) {
         super(component);
     }
@@ -61,6 +65,7 @@ class LeftBracketDecorator extends Decorator {
 }
 
 class RightBracketDecorator extends Decorator {
+
     public RightBracketDecorator(PrinterInterface component) {
         super(component);
     }

@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class AdapterPattern {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         VectorGraphicsInterface g1 = new VectorAdapterFromRaster();
         g1.drawLine();
         g1.drawSquare();
@@ -24,11 +24,11 @@ interface VectorGraphicsInterface {
 
 class RasterGraphics {
     void drawRasterLine() {
-        System.out.println("Рисуем линию");
+        System.out.println("Drawing line");
     }
 
     void drawRasterSquare() {
-        System.out.println("Рисуем квадрат");
+        System.out.println("Drawing square");
     }
 }
 
@@ -43,7 +43,7 @@ class VectorAdapterFromRaster extends RasterGraphics implements VectorGraphicsIn
 }
 
 class VectorAdapterFromRaster2 implements VectorGraphicsInterface {
-    RasterGraphics raster = null;//new RasterGraphics();
+    private final RasterGraphics raster;
 
     public VectorAdapterFromRaster2(RasterGraphics raster) {
         this.raster = raster;

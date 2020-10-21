@@ -8,9 +8,9 @@ public class ChainOfResponsibilityPattern {
         logger0.setNext(logger1);
         logger1.setNext(logger2);
 
-        logger0.writeMessage("Все хорошо", Level.INFO);
-        logger0.writeMessage("Идет режим отладки", Level.DEBUG);
-        logger0.writeMessage("Система упала", Level.ERROR);
+        logger0.writeMessage("Everything nice", Level.INFO);
+        logger0.writeMessage("Debugging", Level.DEBUG);
+        logger0.writeMessage("System shutdown", Level.ERROR);
     }
 }
 
@@ -21,13 +21,14 @@ class Level {
 }
 
 abstract class Logger {
-    int priority;
+    protected int priority;
+    protected Logger next;
 
     public Logger(int priority) {
         this.priority = priority;
     }
 
-    Logger next;
+    abstract void write(String message);
 
     public void setNext(Logger next) {
         this.next = next;
@@ -41,8 +42,6 @@ abstract class Logger {
             next.writeMessage(message, level);
         }
     }
-
-    abstract void write(String message);
 }
 
 class SMSLogger extends Logger {
@@ -51,7 +50,7 @@ class SMSLogger extends Logger {
     }
 
     public void write(String message) {
-        System.out.println("СМС: " + message);
+        System.out.println("SMS: " + message);
     }
 }
 
@@ -61,7 +60,7 @@ class FileLogger extends Logger {
     }
 
     public void write(String message) {
-        System.out.println("Записываем в файл: " + message);
+        System.out.println("Write in file: " + message);
     }
 
 }
@@ -72,6 +71,6 @@ class EmailLogger extends Logger {
     }
 
     public void write(String message) {
-        System.out.println("E-mail сообщение: " + message);
+        System.out.println("E-mail message: " + message);
     }
 }

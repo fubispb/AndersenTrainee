@@ -26,7 +26,7 @@ interface Aggregate {
 }
 
 class ConcreteAggregate implements Aggregate {
-    String[] tasks = {"Построить дом", "Родить сына", "Посадить дерево"};
+    private final String[] tasks = {"Build a house", "Born a son", "Plant a tree"};
 
     @Override
     public Iterator getIterator() {

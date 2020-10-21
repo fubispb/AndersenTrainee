@@ -14,16 +14,17 @@ public class TemplateMethod {
 }
 
 abstract class C {
+
+    abstract void differ();
+
+    abstract void differ2();
+
     final void templateMethod() {
         System.out.print("1");
         differ();
         System.out.print("3");
         differ2();
     }
-
-    abstract void differ();
-
-    abstract void differ2();
 }
 
 class A extends C {

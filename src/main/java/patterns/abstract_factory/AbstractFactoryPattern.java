@@ -3,7 +3,7 @@ package patterns.abstract_factory;
 public class AbstractFactoryPattern {
 
     public static void main(String[] args) {
-        DeviceFactory factory = getFactoryByCountryCode("RU");
+        DeviceFactory factory = getFactoryByCountryCode(Lang.RUSSIAN);
         Mouse m = factory.getMouse();
         Keyboard k = factory.getKeyboard();
         Touchpad t = factory.getTouchpad();
@@ -14,8 +14,8 @@ public class AbstractFactoryPattern {
         t.track(50, 50);
     }
 
-    private static DeviceFactory getFactoryByCountryCode(String lang) {
-        switch (lang) {
+    private static DeviceFactory getFactoryByCountryCode(Lang lang) {
+        switch (lang.getLanguage()) {
             case "RU":
                 return new RuDeviceFactory();
             case "EN":
@@ -23,6 +23,20 @@ public class AbstractFactoryPattern {
             default:
                 throw new RuntimeException("Unsupported Country Code: " + lang);
         }
+    }
+}
+
+enum Lang {
+    RUSSIAN("RU"), ENGLISH("EN");
+
+    private final String language;
+
+    Lang(String language) {
+        this.language = language;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }
 

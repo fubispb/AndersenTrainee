@@ -12,7 +12,7 @@ public class VisitorPattern {
     }
 }
 
-//Посетитель (Visitor)
+// Visitor
 interface Visitor {
     void visit(EngineElement engine);
 
@@ -23,12 +23,12 @@ interface Visitor {
     void visit(WheelElement wheel);
 }
 
-//Элемент - Автозапчасть
+// Element
 interface Element {
     void accept(Visitor visitor);
 }
 
-//Кузов
+// Element - Body
 class BodyElement implements Element {
     @Override
     public void accept(Visitor visitor) {
@@ -36,7 +36,7 @@ class BodyElement implements Element {
     }
 }
 
-//Двигатель
+// Element - Engine
 class EngineElement implements Element {
     @Override
     public void accept(Visitor visitor) {
@@ -44,9 +44,9 @@ class EngineElement implements Element {
     }
 }
 
-//Колесо
+// Element - Wheel
 class WheelElement implements Element {
-    private String name;
+    private final String name;
 
     public String getName() {
         return this.name;
@@ -63,13 +63,13 @@ class WheelElement implements Element {
 }
 
 class CarElement implements Element {
-    Element[] elements;
+    private final Element[] elements;
 
     public CarElement() {
-        this.elements = new Element[] {new WheelElement("переднее левое"),
-                new WheelElement("переднее парвое"),
-                new WheelElement("заднее левое"),
-                new WheelElement("заднее правое"),
+        this.elements = new Element[] {new WheelElement("front left"),
+                new WheelElement("front right"),
+                new WheelElement("rear left"),
+                new WheelElement("rear right"),
                 new BodyElement(), new EngineElement()};
     }
 
@@ -84,43 +84,43 @@ class CarElement implements Element {
 class HooliganVisitor implements Visitor {
     @Override
     public void visit(EngineElement engine) {
-        System.out.println("Завёл двигатель.");
+        System.out.println("Start engine.");
     }
 
     @Override
     public void visit(BodyElement body) {
-        System.out.println("Постучал по корпусу.");
+        System.out.println("Knock car body.");
     }
 
     @Override
     public void visit(CarElement car) {
-        System.out.println("Покурил внутри машины");
+        System.out.println("Smoke inside car");
     }
 
     @Override
     public void visit(WheelElement wheel) {
-        System.out.println("Пнул " + wheel.getName() + " колесо");
+        System.out.println("Kick " + wheel.getName() + " wheel");
     }
 }
 
 class MechanicVisitor implements Visitor {
     @Override
     public void visit(EngineElement engine) {
-        System.out.println("Проверил двигатель.");
+        System.out.println("Check engine.");
     }
 
     @Override
     public void visit(BodyElement body) {
-        System.out.println("Отполировал кузов.");
+        System.out.println("polish the body.");
     }
 
     @Override
     public void visit(CarElement car) {
-        System.out.println("Проверил внешний вид автомобиля");
+        System.out.println("Checked the appearance of the car");
     }
 
     @Override
     public void visit(WheelElement wheel) {
-        System.out.println("Подкачал " + wheel.getName() + " колесо");
+        System.out.println("Pumped up " + wheel.getName() + " wheel");
     }
 }

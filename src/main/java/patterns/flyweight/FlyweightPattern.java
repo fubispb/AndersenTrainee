@@ -10,12 +10,12 @@ public class FlyweightPattern {
 
         List<Shape> shapes = new ArrayList<>();
 
-        shapes.add(shapeFactory.getShape("квадрат"));
-        shapes.add(shapeFactory.getShape("круг"));
-        shapes.add(shapeFactory.getShape("круг"));
-        shapes.add(shapeFactory.getShape("круг"));
-        shapes.add(shapeFactory.getShape("квадрат"));
-        shapes.add(shapeFactory.getShape("круг"));
+        shapes.add(shapeFactory.getShape("square"));
+        shapes.add(shapeFactory.getShape("round"));
+        shapes.add(shapeFactory.getShape("round"));
+        shapes.add(shapeFactory.getShape("round"));
+        shapes.add(shapeFactory.getShape("square"));
+        shapes.add(shapeFactory.getShape("round"));
 
         Random random = new Random();
         for (Shape shape : shapes) {
@@ -35,26 +35,25 @@ interface Shape {
 class Point implements Shape {
     @Override
     public void draw(int x, int y) {
-        System.out.println("("+x+","+y+"): рисуем точку ");
+        System.out.println("(" + x + "," + y + "): drawing point ");
     }
 }
 
 class Circle implements Shape {
 
-    int r = 5;
-
     @Override
     public void draw(int x, int y) {
-        System.out.println("("+x+","+y+"): рисуем круг радиусом "+r);
+        int r = 5;
+        System.out.println("(" + x + "," + y + "): drawing round with radius " + r);
     }
 }
 
-class Square implements  Shape {
-    int a = 10;
+class Square implements Shape {
 
     @Override
     public void draw(int x, int y) {
-        System.out.println("("+x+","+y+"): рисуем квадрат со стороной "+a);
+        int a = 10;
+        System.out.println("(" + x + "," + y + "): drawing square with side " + a);
     }
 }
 
@@ -64,15 +63,15 @@ class ShapeFactory {
 
     public Shape getShape(String shapeName) {
         Shape shape = shapes.get(shapeName);
-        if(shape == null) {
+        if (shape == null) {
             switch (shapeName) {
-                case "круг":
+                case "square":
                     shape = new Circle();
                     break;
-                case "квадрат":
+                case "round":
                     shape = new Square();
                     break;
-                case "точка":
+                case "point":
                     shape = new Point();
                     break;
             }
@@ -80,6 +79,5 @@ class ShapeFactory {
         }
         return shape;
     }
-
 
 }

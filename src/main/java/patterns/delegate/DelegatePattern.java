@@ -14,7 +14,6 @@ class DelegatePattern {
 
 interface Kitchen {
     void cook();
-
 }
 
 class Cocktail implements Kitchen {
@@ -39,7 +38,7 @@ class Miso implements Kitchen {
 }
 
 class Servant {
-    Kitchen kitchen;
+    private Kitchen kitchen;
 
     void setKitchen(Kitchen k) {
         kitchen = k;
