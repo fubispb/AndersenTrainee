@@ -87,15 +87,15 @@ class User {
         this.reset = reset;
     }
 
-    void startComputer() {
+    public void startComputer() {
         start.execute();
     }
 
-    void stopComputer() {
+    public void stopComputer() {
         stop.execute();
     }
 
-    void resetComputer() {
+    public void resetComputer() {
         reset.execute();
     }
 }

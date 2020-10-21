@@ -28,20 +28,20 @@ abstract class C {
 }
 
 class A extends C {
-    void differ() {
+    public void differ() {
         System.out.print("2");
     }
 
-    void differ2() {
+    public void differ2() {
         System.out.print("5");
     }
 }
 
 class B extends C {
-    void differ() {
+    public void differ() {
         System.out.print("4");
     }
 
-    void differ2() {
+    public void differ2() {
     }
 }

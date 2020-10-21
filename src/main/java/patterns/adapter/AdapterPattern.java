@@ -23,11 +23,11 @@ interface VectorGraphicsInterface {
 }
 
 class RasterGraphics {
-    void drawRasterLine() {
+    public void drawRasterLine() {
         System.out.println("Drawing line");
     }
 
-    void drawRasterSquare() {
+    public void drawRasterSquare() {
         System.out.println("Drawing square");
     }
 }

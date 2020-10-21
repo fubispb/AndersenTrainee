@@ -54,7 +54,7 @@ class HumanFactory {
         this.human = human;
     }
 
-    Human makeCopy() {
+    public Human makeCopy() {
         return (Human) human.copy();
     }
 }

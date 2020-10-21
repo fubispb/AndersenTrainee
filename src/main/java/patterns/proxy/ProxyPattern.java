@@ -23,7 +23,7 @@ class RealImage implements Image {
         load();
     }
 
-    void load() {
+    public void load() {
         System.out.println("Loading " + file);
     }
 

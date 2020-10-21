@@ -87,11 +87,11 @@ class VestiFM implements Station {
 class Radio {
     private Station station;
 
-    void setStation(Station st) {
+    public void setStation(Station st) {
         station = st;
     }
 
-    void nextStation() {
+    public void nextStation() {
         if (station instanceof Radio7) {
             setStation(new RadioDFM());
         } else if (station instanceof RadioDFM) {
@@ -101,7 +101,7 @@ class Radio {
         }
     }
 
-    void play() {
+    public void play() {
         station.play();
     }
 }

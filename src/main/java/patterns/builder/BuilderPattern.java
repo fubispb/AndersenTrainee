@@ -49,39 +49,39 @@ abstract class CarBuilder {
 
     abstract void buildMaxSpeed();
 
-    void createCar() {
+    protected void createCar() {
         car = new Car();
     }
 
-    Car getCar() {
+    protected Car getCar() {
         return car;
     }
 }
 
 class FordMondeoBuilder extends CarBuilder {
-    void buildMake() {
+    public void buildMake() {
         car.setMake("Ford Mondeo");
     }
 
-    void buildTransmission() {
+    public void buildTransmission() {
         car.setTransmission(Transmission.AUTO);
     }
 
-    void buildMaxSpeed() {
+    public void buildMaxSpeed() {
         car.setMaxSpeed(260);
     }
 }
 
 class SubaruBuilder extends CarBuilder {
-    void buildMake() {
+    public void buildMake() {
         car.setMake("Subaru");
     }
 
-    void buildTransmission() {
+    public void buildTransmission() {
         car.setTransmission(Transmission.MANUAL);
     }
 
-    void buildMaxSpeed() {
+    public void buildMaxSpeed() {
         car.setMaxSpeed(320);
     }
 }
@@ -89,11 +89,11 @@ class SubaruBuilder extends CarBuilder {
 class Director {
     private CarBuilder builder;
 
-    void setBuilder(CarBuilder b) {
+    public void setBuilder(CarBuilder b) {
         builder = b;
     }
 
-    Car BuildCar() {
+    public Car BuildCar() {
         builder.createCar();
         builder.buildMake();
         builder.buildTransmission();

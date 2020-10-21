@@ -58,7 +58,7 @@ class PlusExpression implements Expression {
 }
 
 class Context {
-    Expression evaluate(String s) {
+    public Expression evaluate(String s) {
         int pos = s.length() - 1;
         while (pos > 0) {
             if (Character.isDigit(s.charAt(pos))) {

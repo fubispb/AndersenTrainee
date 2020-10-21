@@ -20,7 +20,7 @@ abstract class Car {
 
     abstract void showType();
 
-    void showDetails() {
+    protected void showDetails() {
         showType();
         make.setMake();
     }

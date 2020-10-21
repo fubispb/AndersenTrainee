@@ -40,11 +40,11 @@ class Miso implements Kitchen {
 class Servant {
     private Kitchen kitchen;
 
-    void setKitchen(Kitchen k) {
+    public void setKitchen(Kitchen k) {
         kitchen = k;
     }
 
-    void cook() {
+    public void cook() {
         kitchen.cook();
     }
 }
