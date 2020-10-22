@@ -1,7 +1,7 @@
 package collections.array_list;
 
 
-interface MyList<T> {
+public interface MyList<T> {
 
     int size();
 
@@ -10,6 +10,8 @@ interface MyList<T> {
     void add(int index, T t);
 
     boolean remove(T t);
+
+    boolean remove(int index);
 
     boolean contains(T t);
 

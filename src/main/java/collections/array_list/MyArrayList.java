@@ -53,12 +53,15 @@ public class MyArrayList<T> implements MyList<T> {
         return false;
     }
 
-    public void remove(int index) {
+    public boolean remove(int index) {
         int countToMove = size - index - 1;
         if (index >= 0 && index <= size) {
             System.arraycopy(elements, index + 1, elements, index, countToMove);
             elements[--size] = null;
+            return true;
         }
+        return false;
+
     }
 
     @Override
@@ -114,6 +117,9 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public String toString() {
+        if(size == 0){
+            return "[ ]";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < size; i++) {
