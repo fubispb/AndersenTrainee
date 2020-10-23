@@ -175,7 +175,6 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public boolean contains(T t) {
-        //TODO
         if (Objects.isNull(t)) {
             for (Node<T> i = first; Objects.nonNull(i); i = i.next) {
                 if (Objects.isNull(i.current)) {
