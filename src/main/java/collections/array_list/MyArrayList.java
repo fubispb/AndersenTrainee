@@ -35,16 +35,16 @@ public class MyArrayList<T> implements MyList<T> {
     public void add(int index, T t) {
         checkRange(index);
         checkCapacity();
-        System.arraycopy(elements, index, elements, index +1, size - index);
+        System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = t;
         size++;
     }
 
     @Override
     public boolean remove(Object o) {
-        if (o != null) {
+        if (Objects.nonNull(o)) {
             for (int i = 0; i < size; i++) {
-                if (elements[i].equals(o)){
+                if (Objects.equals(elements[i], o)) {
                     remove(i);
                     return true;
                 }
@@ -66,15 +66,15 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public boolean contains(T t) {
-        if (t == null) {
+        if (Objects.isNull(t)) {
             for (int i = 0; i < size; i++) {
-                if( elements[i] == null){
+                if (Objects.isNull(elements[i])) {
                     return true;
                 }
             }
         }
         for (int i = 0; i < size; i++) {
-            if (elements[i].equals(t)){
+            if (Objects.equals(elements[i], t)) {
                 return true;
             }
         }
@@ -92,15 +92,15 @@ public class MyArrayList<T> implements MyList<T> {
             throw new OutOfMemoryError();
         }
         int newCapacity = currentCapacity + (currentCapacity >> 1);
-        if (currentCapacity < 0){
+        if (currentCapacity < 0) {
             newCapacity = MAX_CAPACITY;
         }
         elements = Arrays.copyOf(elements, newCapacity);
         currentCapacity = newCapacity;
     }
 
-    private void checkRange (int index) {
-        if (index < 0 && index > size){
+    private void checkRange(int index) {
+        if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
     }
@@ -111,19 +111,23 @@ public class MyArrayList<T> implements MyList<T> {
         }
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
     @Override
     public String toString() {
-        if(size == 0){
+        if (size == 0) {
             return "[ ]";
         }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < size; i++) {
-            sb.append(elements[i]).append(", ");
+            if (Objects.isNull(elements[i])) {
+                sb.append("null, ");
+            } else {
+                sb.append(elements[i].toString()).append(", ");
+            }
         }
         sb.delete(sb.length() - 2, sb.length());
         sb.append("]");
@@ -133,7 +137,7 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (Objects.isNull(o) || getClass() != o.getClass()) return false;
         MyArrayList<?> that = (MyArrayList<?>) o;
         return size == that.size && Arrays.equals(elements, that.elements);
     }
