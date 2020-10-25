@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class MyPriorityQueue<T> {
+public class MyPriorityQueue<T extends Comparable<T>> {
     private int size;
     private Object[] queue;
     private static final int DEFAULT_CAPACITY = 10;
@@ -39,6 +39,12 @@ public class MyPriorityQueue<T> {
         comparator = null;
     }
 
+    public void clear() {
+        for (int i = 0; i < size; i++)
+            queue[i] = null;
+        size = 0;
+    }
+
     public void offer(T t) {
         if (size == 0) {
             queue[0] = t;
@@ -54,15 +60,38 @@ public class MyPriorityQueue<T> {
     }
 
     public T poll() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        T temp = (T) queue[0];
+        if (size >= 0) System.arraycopy(queue, 1, queue, 0, size);
+        queue[size] = null;
+        size--;
+        return temp;
     }
 
     public T peek() {
-        return null;
+        return (size == 0) ? null : (T) queue[0];
     }
 
     public int size(){
         return size;
+    }
+
+    public boolean contains(T t) {
+        if (Objects.isNull(t)) {
+            for (int i = 0; i < size; i++) {
+                if (Objects.isNull(queue[i])) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(queue[i], t)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkCapacity() {
@@ -84,24 +113,24 @@ public class MyPriorityQueue<T> {
     }
 
     private void addWithUserComparator(T t) {
-        //TODO
-        //T temp = t;
-        //int currentIndex = 0;
-        //for (int i = 0; i < size; i++) {
-        //    if (comparator.compare(t, (T) queue[i]) >= 0) {
-        //        queue[]
-        //        size++;
-        //    }
-        //}
-        //System.arraycopy(queue, index, queue, index + 1, size - index);
-        //queue[index] = t;
-        //size++;
+        T temp = t;
+        int currentIndex = 0;
+        for (int i = 0; i < size; i++) {
+            if (comparator.compare(t, (T) queue[i]) >= 0) {
+                temp = (T) queue[i];
+                currentIndex = i;
+                break;
+            }
+        }
+        System.arraycopy(queue, currentIndex, queue, currentIndex + 1, size - currentIndex);
+        queue[currentIndex] = temp;
+        size++;
     }
 
     private void addWithoutUserComparator(T t) {
         queue[size] = t;
         size++;
-        Arrays.sort(queue, 0, size);
+        Arrays.sort(queue, 0, size - 1);
     }
 
     @Override
@@ -123,5 +152,18 @@ public class MyPriorityQueue<T> {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyPriorityQueue<?> that = (MyPriorityQueue<?>) o;
+        return Arrays.equals(queue, that.queue);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(size, currentCapacity, comparator);
+        result = 31 * result + Arrays.hashCode(queue);
+        return result;
+    }
 }
