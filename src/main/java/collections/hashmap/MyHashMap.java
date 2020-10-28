@@ -99,7 +99,7 @@ public class MyHashMap<K, V> {
     }
 
     public boolean containsKey(K k) {
-        return get(k) != null;
+        return Objects.nonNull(get(k));
     }
 
     public boolean containsValue(V v) {
@@ -252,8 +252,8 @@ public class MyHashMap<K, V> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (Objects.equals(this, o)) return true;
+        if (Objects.isNull(o) || getClass() != o.getClass()) return false;
         MyHashMap<?, ?> myHashMap = (MyHashMap<?, ?>) o;
         return Arrays.equals(table, myHashMap.table);
     }
