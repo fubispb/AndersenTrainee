@@ -23,7 +23,6 @@ public class Client {
             out = new PrintWriter(socket.getOutputStream());
             reader = new BufferedReader(new InputStreamReader(System.in));
             setName();
-            readServerMessages();
             while (true) {
                 try {
                     readServerMessages();

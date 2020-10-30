@@ -36,7 +36,6 @@ public class ClientHandler implements Runnable {
         System.out.println(SystemMessages.enteredUser(clientName));
         System.out.println(SystemMessages.countOfUsers(clients_count));
         server.privateMessage(this, SystemMessages.enteredUser(clientName));
-        server.privateMessage(this, SystemMessages.countOfUsers(clients_count));
         while (true) {
             if (inMessage.hasNext()) {
                 String clientMessage = inMessage.nextLine();
@@ -47,19 +46,15 @@ public class ClientHandler implements Runnable {
                 }
                 System.out.println(clientName + ": " + clientMessage);
                 String serverAnswer = "Server: very interesting... Go on!";
-                server.privateMessage(this, "Server: very interesting... Go on!");
+                server.privateMessage(this, serverAnswer);
                 System.out.println(serverAnswer);
             }
         }
     }
 
     public void sendMessage(String message) {
-        try {
-            outMessage.println(message);
-            outMessage.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        outMessage.println(message);
+        outMessage.flush();
     }
 
     private void close() {
