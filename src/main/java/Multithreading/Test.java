@@ -66,11 +66,6 @@ public class Test {
 
     }
 
-    public synchronized int increment() {
-        wrapper.increment();
-        return Wrapper.commonInt;
-    }
-
 }
 
 
