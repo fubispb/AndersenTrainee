@@ -27,8 +27,6 @@ public class Test {
 
     public void executorsCallIncrement() {
         executors.stream().flatMapToInt(executorService -> IntStream.range(0, 5)).forEach(i -> wrapper.increment());
-        fixedPool.shutdown();
-        singleExecutor.shutdown();
-        cachedPool.shutdown();
+        executors.forEach(ExecutorService::shutdown);
     }
 }
