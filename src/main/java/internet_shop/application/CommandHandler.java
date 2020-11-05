@@ -44,6 +44,7 @@ public class CommandHandler {
                 case "/add":
                     if (bucket.containsKey(stringToProduct(splittedInputs[1]))) {
                         addIfExists(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
+                        break;
                     }
                     add(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
                     break;
@@ -54,12 +55,10 @@ public class CommandHandler {
                     showProductsList();
                     break;
                 case "/delete":
-                    if (!bucket.containsKey(stringToProduct(splittedInputs[1]))){
+                    if (!bucket.containsKey(stringToProduct(splittedInputs[1]))) {
                         System.out.println(SystemMessagesAndCommands.incorrectInput("Your bucket doesn't contains " +
                                 splittedInputs[1]));
-
-                    }
-                    else deleteProduct(stringToProduct(splittedInputs[1]));
+                    } else deleteProduct(stringToProduct(splittedInputs[1]));
                     break;
                 case "/showbucket":
                     showProductsInBucket();
@@ -88,12 +87,13 @@ public class CommandHandler {
     private void addIfExists(Product product, int count) {
         int currentCount = bucket.get(product);
         bucket.put(product, currentCount + count);
+        incrementAmount(product, count);
         showBucketContainsAndAmount();
         System.out.println(SystemMessagesAndCommands.currentBucketAmount(currentBucketAmount));
     }
 
     private void showProductsInBucket() {
-        if(bucket.size() == 0){
+        if (bucket.size() == 0) {
             System.out.println(SystemMessagesAndCommands.emptyBucket);
             return;
         }
@@ -163,7 +163,7 @@ public class CommandHandler {
                     if (userInput[1].equalsIgnoreCase(str)) {
                         try {
                             int value = Integer.parseInt(userInput[2]);
-                            if(value <= 0){
+                            if (value <= 0) {
                                 System.out.println(SystemMessagesAndCommands.incorrectInput(userInput[2]));
                                 return false;
                             }

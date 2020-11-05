@@ -38,7 +38,7 @@ class CommandHandlerTest {
     }
 
     private void assertClientName(String name) {
-        Assert.assertEquals(commands.getClientName(), "Mike");
+        Assert.assertEquals(commands.getClientName(), name);
     }
 
     public void assertBucketSize(int size) {
