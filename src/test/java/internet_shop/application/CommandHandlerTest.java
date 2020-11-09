@@ -33,8 +33,8 @@ class CommandHandlerTest {
         assertAmount(0);
     }
 
-    private void assertAmount(int amount) {
-        Assert.assertEquals(amount, commands.getCurrentBucketAmount());
+    private void assertAmount(double amount) {
+        Assert.assertEquals(amount, commands.getCurrentBucketAmount(), 1);
     }
 
     private void assertClientName(String name) {

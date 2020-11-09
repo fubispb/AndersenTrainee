@@ -3,22 +3,27 @@ package internet_shop.application;
 import internet_shop.products.food.Apple;
 import internet_shop.products.food.Coffee;
 import internet_shop.products.food.Cookies;
+import internet_shop.products.milk.Parmalat;
 import internet_shop.products.not_food.Chair;
 import internet_shop.products.not_food.Computer;
 import internet_shop.products.not_food.Table;
 import internet_shop.products.Product;
+import internet_shop.warehouse.Warehouse;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class CommandHandler {
+public class CommandHandler implements Serializable {
 
+    private Warehouse warehouse;
     private final String clientName;
     private final Map<Product, Integer> bucket;
-    private int currentBucketAmount;
+    private double currentBucketAmount;
 
     public CommandHandler(String name) {
+        warehouse = new Warehouse();
         this.clientName = name;
         bucket = new HashMap<>();
     }
@@ -31,44 +36,47 @@ public class CommandHandler {
         return bucket.size();
     }
 
-    public int getCurrentBucketAmount() {
+    public double getCurrentBucketAmount() {
         return currentBucketAmount;
     }
 
     public void userCommandHandler(String userInput) {
         String[] splittedInputs = userInput.split(" ");
-        if (verifyUserInput(splittedInputs)) {
-            switch (splittedInputs[0]) {
-                case "/exit":
-                    exitSystem();
-                case "/add":
-                    if (bucket.containsKey(stringToProduct(splittedInputs[1]))) {
-                        addIfExists(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
+        try {
+            Commands command = Commands.valueOf(splittedInputs[0].toUpperCase());
+            if (verifyUserInput(splittedInputs)) {
+                switch (command) {
+                    case EXIT:
+                        exitSystem();
+                    case ADD:
+                        if (bucket.containsKey(stringToProduct(splittedInputs[1]))) {
+                            addIfExists(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
+                            break;
+                        }
+                        add(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
                         break;
-                    }
-                    add(stringToProduct(splittedInputs[1]), Integer.parseInt(splittedInputs[2]));
-                    break;
-                case "/clear":
-                    clearBucket();
-                    break;
-                case "/showall":
-                    showProductsList();
-                    break;
-                case "/delete":
-                    if (!bucket.containsKey(stringToProduct(splittedInputs[1]))) {
-                        System.out.println(SystemMessagesAndCommands.incorrectInput("Your bucket doesn't contains " +
-                                splittedInputs[1]));
-                    } else deleteProduct(stringToProduct(splittedInputs[1]));
-                    break;
-                case "/showbucket":
-                    showProductsInBucket();
-                    break;
-                case "/help":
-                    System.out.println(SystemMessagesAndCommands.startProgramMessage);
-                    break;
-                default:
-                    System.out.println("Unknown command: " + splittedInputs[0]);
+                    case CLEAR:
+                        clearBucket();
+                        break;
+                    case SHOWALL:
+                        showProductsList();
+                        break;
+                    case DELETE:
+                        if (!bucket.containsKey(stringToProduct(splittedInputs[1]))) {
+                            System.out.println(SystemMessagesAndCommands.incorrectInput("Your bucket doesn't contains " +
+                                    splittedInputs[1]));
+                        } else deleteProduct(stringToProduct(splittedInputs[1]));
+                        break;
+                    case SHOWBUCKET:
+                        showProductsInBucket();
+                        break;
+                    case HELP:
+                        System.out.println(SystemMessagesAndCommands.startProgramMessage);
+                        break;
+                }
             }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Unknown command: " + splittedInputs[0]);
         }
     }
 
@@ -114,11 +122,19 @@ public class CommandHandler {
 
     private void exitSystem() {
         System.out.println("Exiting system...");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(clientName + ".ser");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 
     private void showBucketContainsAndAmount() {
-        System.out.println("Your bucket contains:\n" + bucket);
+        System.out.println(SystemMessagesAndCommands.containsOfBucket + "\n" + bucket);
     }
 
     private void incrementAmount(Product product, int count) {
@@ -183,21 +199,42 @@ public class CommandHandler {
     }
 
     private Product stringToProduct(String str) {
-        switch (str.toLowerCase()) {
-            case "apple":
+        Products product = Products.valueOf(str.toUpperCase());
+        switch (product) {
+            case APPLE:
                 return new Apple();
-            case "coffee":
+            case COFFEE:
                 return new Coffee();
-            case "cookies":
+            case COOKIES:
                 return new Cookies();
-            case "chair":
+            case CHAIR:
                 return new Chair();
-            case "computer":
+            case COMPUTER:
                 return new Computer();
-            case "table":
+            case TABLE:
                 return new Table();
+            case PARMALAT:
+                return new Parmalat();
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "CommandHandler{" +
+                "clientName='" + clientName + '\'' +
+                ", bucket=" + bucket +
+                ", currentBucketAmount=" + currentBucketAmount +
+                '}';
+    }
+
+    enum Products {
+        APPLE, COFFEE, COOKIES, CHAIR, COMPUTER, TABLE, PARMALAT
+    }
+
+    enum Commands {
+        EXIT, CLEAR, SHOWALL, SHOWBUCKET, HELP, ADD, DELETE
+    }
+
 
 }

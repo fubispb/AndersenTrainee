@@ -1,11 +1,20 @@
 package internet_shop.products.not_food;
 
+import internet_shop.currency.CurrencyStrategy;
+import internet_shop.currency.DollarStrategy;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Table extends NotFood {
+public class Table extends NotFood implements Serializable {
 
+    CurrencyStrategy currencyStrategy;
     final String name = "Table";
-    int price = 70;
+    int boughtPrice = 70;
+
+    public Table() {
+        this.currencyStrategy = new DollarStrategy();
+    }
 
     @Override
     public String getName() {
@@ -13,24 +22,24 @@ public class Table extends NotFood {
     }
 
     @Override
-    public int getPrice() {
-        return price;
+    public double getPrice() {
+        return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
     @Override
-    public void setPrice(int price) {
-        this.price = price;
+    public void setExpiredDate(String date) {
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        return o != null && getClass() == o.getClass();
+        return Objects.nonNull(o) && getClass() == o.getClass();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price);
+        return Objects.hash(name, boughtPrice);
     }
 
     @Override

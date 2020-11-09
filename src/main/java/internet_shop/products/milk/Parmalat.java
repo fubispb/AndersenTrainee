@@ -1,18 +1,22 @@
-package internet_shop.products.not_food;
+package internet_shop.products.milk;
 
 import internet_shop.currency.CurrencyStrategy;
 import internet_shop.currency.HryvniaStrategy;
+import internet_shop.products.ExpiringProduct;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Chair extends NotFood implements Serializable {
+
+public class Parmalat extends Milk implements Serializable {
 
     CurrencyStrategy currencyStrategy;
-    final String name = "Chair";
-    int boughtPrice = 50;
+    final String name = "Parmalat";
+    int boughtPrice = 25;
+    @ExpiringProduct
+    public String expiredDate;
 
-    public Chair() {
+    public Parmalat() {
         this.currencyStrategy = new HryvniaStrategy();
     }
 
