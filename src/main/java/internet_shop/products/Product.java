@@ -2,6 +2,7 @@ package internet_shop.products;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public abstract class Product implements Serializable {
         this.price = price;
     }
 
-    public abstract void setExpiredDate(String date);
+    public abstract void setExpiredDate(LocalDate date);
 
 
 }

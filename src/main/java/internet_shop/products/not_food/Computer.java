@@ -2,10 +2,12 @@ package internet_shop.products.not_food;
 
 import internet_shop.currency.CurrencyStrategy;
 import internet_shop.currency.DollarStrategy;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.time.LocalDate;
 
+@Data
 public class Computer extends NotFood implements Serializable {
 
     CurrencyStrategy currencyStrategy;
@@ -17,34 +19,13 @@ public class Computer extends NotFood implements Serializable {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public double getPrice() {
         return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
     @Override
-    public void setExpiredDate(String date) {
+    public void setExpiredDate(LocalDate date) {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return Objects.nonNull(o) && getClass() == o.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, boughtPrice);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
 }

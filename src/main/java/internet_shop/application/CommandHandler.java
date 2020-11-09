@@ -9,6 +9,7 @@ import internet_shop.products.not_food.Computer;
 import internet_shop.products.not_food.Table;
 import internet_shop.products.Product;
 import internet_shop.warehouse.Warehouse;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class CommandHandler implements Serializable {
     private final String clientName;
     private final Map<Product, Integer> bucket;
     private double currentBucketAmount;
-
+    private Logger log;
     public CommandHandler(String name) {
         warehouse = new Warehouse();
         this.clientName = name;
@@ -128,7 +129,7 @@ public class CommandHandler implements Serializable {
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Start log. " + e);
         }
         System.exit(0);
     }

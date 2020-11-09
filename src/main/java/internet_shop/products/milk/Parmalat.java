@@ -3,11 +3,12 @@ package internet_shop.products.milk;
 import internet_shop.currency.CurrencyStrategy;
 import internet_shop.currency.HryvniaStrategy;
 import internet_shop.products.ExpiringProduct;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.time.LocalDate;
 
-
+@Data
 public class Parmalat extends Milk implements Serializable {
 
     CurrencyStrategy currencyStrategy;
@@ -21,34 +22,13 @@ public class Parmalat extends Milk implements Serializable {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public double getPrice() {
         return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
     @Override
-    public void setExpiredDate(String date) {
+    public void setExpiredDate(LocalDate date) {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return Objects.nonNull(o) && getClass() == o.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, boughtPrice);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
 }

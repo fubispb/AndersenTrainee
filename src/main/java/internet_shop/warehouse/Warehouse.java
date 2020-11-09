@@ -12,7 +12,7 @@ import internet_shop.products.not_food.Table;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +21,7 @@ public class Warehouse implements Serializable {
     public Map<Product, Integer> products;
 
     public Warehouse() {
+
         this.products = new HashMap<>();
         Apple apple = new Apple();
         checkBeforeStock(apple);
@@ -56,7 +57,7 @@ public class Warehouse implements Serializable {
             if (field.isAnnotationPresent(ExpiringProduct.class)) {
                 field.setAccessible(true);
                 try {
-                    field.set(product, "31.11.2020");
+                    field.set(product, LocalDate.of(2020, 11, 31));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

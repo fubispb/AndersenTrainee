@@ -1,5 +1,6 @@
 package internet_shop.application;
 
+import org.slf4j.Logger;
 import java.io.*;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ public class Client {
 
     private CommandHandler commands;
     private Scanner in = new Scanner(System.in);
+    private Logger log;
 
     public void start() {
         System.out.println("Please enter your name:");
@@ -18,7 +20,7 @@ public class Client {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 commands = (CommandHandler) objectInputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                log.error("Start log. " + e);
             }
         }
         else commands = new CommandHandler(userInput);
