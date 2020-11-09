@@ -9,6 +9,8 @@ import internet_shop.products.milk.Parmalat;
 import internet_shop.products.not_food.Chair;
 import internet_shop.products.not_food.Computer;
 import internet_shop.products.not_food.Table;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class Warehouse implements Serializable {
 
     public Map<Product, Integer> products;
@@ -59,7 +62,7 @@ public class Warehouse implements Serializable {
                 try {
                     field.set(product, LocalDate.of(2020, 11, 31));
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error("Start log. " + e);
                 }
             }
         }

@@ -9,20 +9,23 @@ import internet_shop.products.not_food.Computer;
 import internet_shop.products.not_food.Table;
 import internet_shop.products.Product;
 import internet_shop.warehouse.Warehouse;
-import org.slf4j.Logger;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
+@ToString
 public class CommandHandler implements Serializable {
 
     private Warehouse warehouse;
     private final String clientName;
     private final Map<Product, Integer> bucket;
     private double currentBucketAmount;
-    private Logger log;
+
     public CommandHandler(String name) {
         warehouse = new Warehouse();
         this.clientName = name;
@@ -128,6 +131,7 @@ public class CommandHandler implements Serializable {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
+            ConnectBaseService.disconnect();
         } catch (IOException e) {
             log.error("Start log. " + e);
         }
@@ -218,15 +222,6 @@ public class CommandHandler implements Serializable {
                 return new Parmalat();
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return "CommandHandler{" +
-                "clientName='" + clientName + '\'' +
-                ", bucket=" + bucket +
-                ", currentBucketAmount=" + currentBucketAmount +
-                '}';
     }
 
     enum Products {

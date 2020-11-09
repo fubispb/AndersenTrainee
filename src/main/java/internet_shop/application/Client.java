@@ -1,16 +1,22 @@
 package internet_shop.application;
 
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+@Slf4j
 public class Client {
 
     private CommandHandler commands;
     private Scanner in = new Scanner(System.in);
-    private Logger log;
 
     public void start() {
+        try {
+            ConnectBaseService.connect();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println("Please enter your name:");
         String userInput = in.nextLine();
         File file = new File(userInput + ".ser");

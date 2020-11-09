@@ -4,7 +4,6 @@ import internet_shop.currency.CurrencyStrategy;
 import internet_shop.currency.DollarStrategy;
 import internet_shop.products.ExpiringProduct;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
