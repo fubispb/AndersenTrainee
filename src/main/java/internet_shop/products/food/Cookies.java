@@ -1,41 +1,35 @@
 package internet_shop.products.food;
 
-import java.util.Objects;
+import internet_shop.currency.CurrencyStrategy;
+import internet_shop.currency.HryvniaStrategy;
+import internet_shop.products.ExpiringProduct;
+import lombok.Data;
 
-public class Cookies extends Food {
+import java.io.Serializable;
+import java.time.LocalDate;
 
+@Data
+public class Cookies extends Food implements Serializable {
+
+    CurrencyStrategy currencyStrategy;
     final String name = "Cookies";
-    int price = 10;
+    int boughtPrice = 10;
+    @ExpiringProduct
+    public LocalDate expiredDate;
+
+    public Cookies() {
+        this.currencyStrategy = new HryvniaStrategy();
+    }
+
 
     @Override
-    public String getName() {
-        return name;
+    public double getPrice() {
+        return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
     @Override
-    public int getPrice() {
-        return price;
-    }
+    public void setExpiredDate(LocalDate date) {
 
-    @Override
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return o != null && getClass() == o.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
 }

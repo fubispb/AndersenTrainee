@@ -1,41 +1,31 @@
 package internet_shop.products.not_food;
 
-import java.util.Objects;
+import internet_shop.currency.CurrencyStrategy;
+import internet_shop.currency.HryvniaStrategy;
+import lombok.Data;
 
-public class Chair extends NotFood {
+import java.io.Serializable;
+import java.time.LocalDate;
 
+@Data
+public class Chair extends NotFood implements Serializable {
+
+    CurrencyStrategy currencyStrategy;
     final String name = "Chair";
-    int price = 50;
+    int boughtPrice = 50;
 
-    @Override
-    public String getName() {
-        return name;
+    public Chair() {
+        this.currencyStrategy = new HryvniaStrategy();
     }
 
     @Override
-    public int getPrice() {
-        return price;
+    public double getPrice() {
+        return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
     @Override
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public void setExpiredDate(LocalDate date) {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return o != null && getClass() == o.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
 }

@@ -1,41 +1,35 @@
 package internet_shop.products.food;
 
-import java.util.Objects;
+import internet_shop.currency.CurrencyStrategy;
+import internet_shop.currency.DollarStrategy;
+import internet_shop.products.ExpiringProduct;
+import lombok.Data;
 
-public class Apple extends Food{
+import java.io.Serializable;
+import java.time.LocalDate;
 
+@Data
+public class Apple extends Food implements Serializable {
+
+    CurrencyStrategy currencyStrategy;
     final String name = "Apple";
-    int price = 30;
+    int boughtPrice = 30;
 
-    @Override
-    public String getName() {
-        return name;
+    @ExpiringProduct
+    private LocalDate expiredDate;
+
+    public Apple() {
+        this.currencyStrategy = new DollarStrategy();
     }
 
     @Override
-    public int getPrice() {
-        return price;
+    public void setExpiredDate(LocalDate date) {
+        this.expiredDate = date;
     }
 
     @Override
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return o != null && getClass() == o.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price);
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public double getPrice() {
+        return currencyStrategy.multiply(boughtPrice, currencyStrategy.getCourse(), currencyStrategy.getMultiplicity());
     }
 
 }

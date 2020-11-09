@@ -1,21 +1,24 @@
-package internet_shop.products.not_food;
+package internet_shop.products.milk;
 
 import internet_shop.currency.CurrencyStrategy;
-import internet_shop.currency.DollarStrategy;
+import internet_shop.currency.HryvniaStrategy;
+import internet_shop.products.ExpiringProduct;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-public class Table extends NotFood implements Serializable {
+public class Parmalat extends Milk implements Serializable {
 
     CurrencyStrategy currencyStrategy;
-    final String name = "Table";
-    int boughtPrice = 70;
+    final String name = "Parmalat";
+    int boughtPrice = 25;
+    @ExpiringProduct
+    public String expiredDate;
 
-    public Table() {
-        this.currencyStrategy = new DollarStrategy();
+    public Parmalat() {
+        this.currencyStrategy = new HryvniaStrategy();
     }
 
     @Override
@@ -27,4 +30,5 @@ public class Table extends NotFood implements Serializable {
     public void setExpiredDate(LocalDate date) {
 
     }
+
 }

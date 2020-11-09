@@ -3,12 +3,9 @@ package internet_shop.products.food;
 
 import internet_shop.products.Product;
 
-public abstract class Food extends Product {
+import java.io.Serializable;
 
-    String name;
-    int price;
-
-
+public abstract class Food extends Product implements Serializable {
 
 
 }
