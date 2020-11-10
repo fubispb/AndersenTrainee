@@ -1,37 +1,58 @@
+DROP TABLE IF EXISTS order_products;
 DROP TABLE IF EXISTS buckets;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS info_table;
+DROP PROCEDURE IF EXISTS `info_user`;
 
 
 CREATE TABLE users
 (
-  `id`                      BIGINT NOT NULL AUTO_INCREMENT,
-  `name`                    VARCHAR(100) NOT NULL,
-  PRIMARY KEY               (`id`)
+    `id`                      BIGINT NOT NULL AUTO_INCREMENT,
+    `name`                    VARCHAR(100) NOT NULL,
+    PRIMARY KEY               (`id`)
 );
 
 CREATE TABLE orders
 (
-  `id`                      BIGINT NOT NULL AUTO_INCREMENT,
-  `users_id`                BIGINT NOT NULL,
-  `processed`               TINYINT NULL,
-  `data`                    INT NULL,
-  `date_created`            TIMESTAMP NULL DEFAULT NOW(),
-  PRIMARY KEY               (`id`),
-  FOREIGN KEY               (users_id)
-  REFERENCES                users (id)
-  ON DELETE                 NO ACTION
-  ON UPDATE                 NO ACTION
+    `order_id`                BIGINT NOT NULL,
+    `users_id`                BIGINT NOT NULL,
+    `processed`               TINYINT NULL,
+    `sum`                     INT NULL,
+    `date_created`            TIMESTAMP NULL DEFAULT NOW(),
+    PRIMARY KEY               (`order_id`),
+    INDEX                     `fk_users_idx` (`users_id` ASC) VISIBLE,
+    CONSTRAINT                `fk_users`
+    FOREIGN KEY               (`users_id`)
+    REFERENCES                `users` (`id`)
+    ON DELETE                 NO ACTION
+    ON UPDATE                 NO ACTION
 );
 
 CREATE TABLE products
 (
-  `id`                      BIGINT NOT NULL,
-  `name`                    VARCHAR(100) NOT NULL,
-  `price`                   INT NULL,
-  PRIMARY KEY               (`id`)
+    `product_id`              BIGINT NOT NULL AUTO_INCREMENT,
+    `name`                    VARCHAR(100) NOT NULL,
+    `price`                   INT NULL,
+    PRIMARY KEY               (`product_id`)
+);
+
+CREATE TABLE order_products (
+    `order_id`                BIGINT NOT NULL,
+    `products_id`             BIGINT NULL,
+    `count`                   INT NULL,
+    INDEX                     `fk_products_id_idx` (`products_id` ASC) VISIBLE,
+    CONSTRAINT                `fk_order_id`
+    FOREIGN KEY               (`order_id`)
+    REFERENCES                orders (`order_id`)
+    ON DELETE                 NO ACTION
+    ON UPDATE                 NO ACTION,
+    CONSTRAINT                `fk_products_id`
+    FOREIGN KEY               (`products_id`)
+    REFERENCES                products (`product_id`)
+    ON DELETE                 NO ACTION
+    ON UPDATE                 NO ACTION
 );
 
 CREATE TABLE buckets
@@ -41,43 +62,55 @@ CREATE TABLE buckets
     `products_id`             BIGINT NULL,
     PRIMARY KEY               (`id`),
     FOREIGN KEY               (users_id)
-        REFERENCES                users (id)
-        ON DELETE                 NO ACTION
-        ON UPDATE                 NO ACTION,
+    REFERENCES                users (id)
+    ON DELETE                 NO ACTION
+    ON UPDATE                 NO ACTION,
     FOREIGN KEY               (products_id)
-        REFERENCES                products (id)
-        ON DELETE                 NO ACTION
-        ON UPDATE                 NO ACTION
+    REFERENCES                products (product_id)
+    ON DELETE                 NO ACTION
+    ON UPDATE                 NO ACTION
 );
 
 CREATE TABLE info_table
 (
-  `id`                      BIGINT NOT NULL AUTO_INCREMENT,
-  `users_id`                BIGINT NOT NULL,
-  `order_created`           TIMESTAMP NULL DEFAULT NOW(),
-  `orders_id`               BIGINT NULL,
-  `data`                    INT NULL,
-  `processed`               TINYINT NULL,
-  PRIMARY KEY               (`id`)
+    `id`                      BIGINT NOT NULL AUTO_INCREMENT,
+    `users_id`                BIGINT NOT NULL,
+    `order_id`                BIGINT NULL,
+    `processed`               TINYINT NULL,
+    `order_created`           TIMESTAMP NULL DEFAULT NOW(),
+    `order_sum`               INT NULL,
+    PRIMARY KEY               (`id`)
 );
 
-# CREATE DEFINER = CURRENT_USER TRIGGER `orders_AFTER_INSERT`
-# AFTER INSERT ON `orders` FOR EACH ROW
-# BEGIN
-# INSERT INTO info_table SET
-#                              orders_id = NEW.id,
-#                              users_id = NEW.users_id,
-#                              order_created = TIMESTAMP(NOW()),
-#                              `data` = NEW.`data`,
-#                              processed = NEW.processed;
-# END
+INSERT INTO users (`name`) VALUES ('admin');
+INSERT INTO users (`name`) VALUES ('Bob');
+INSERT INTO products (`name`, `price`) VALUES ('Apple', '30');
+INSERT INTO products (`name`, `price`) VALUES ('Coffee', '80');
+INSERT INTO products (`name`, `price`) VALUES ('Cookies', '10');
+INSERT INTO products (`name`, `price`) VALUES ('Parmalat', '25');
+INSERT INTO products (`name`, `price`) VALUES ('Chair', '50');
+INSERT INTO products (`name`, `price`) VALUES ('Computer', '250');
+INSERT INTO products (`name`, `price`) VALUES ('Table', '70');
 
+
+CREATE DEFINER = CURRENT_USER TRIGGER `orders_AFTER_INSERT`
+AFTER INSERT ON `orders` FOR EACH ROW
+BEGIN
+INSERT INTO info_table SET
+                             order_id = NEW.order_id,
+                             users_id = NEW.users_id,
+                             order_created = NEW.`date_created`,
+                             processed = NEW.processed,
+                             order_sum = NEW.sum;
+END
+
+#
 # USE `my_shop`;
 # DROP procedure IF EXISTS `info_user`;
 #
 # DELIMITER $$
 # USE `my_shop`$$
-# CREATE PROCEDURE `new_procedure` (OUT param1 TIMESTAMP, OUT param2 BIGINT, OUT param3 INT)
+# CREATE PROCEDURE `info_user` (IN id BIGINT, OUT data TIMESTAMP, OUT orderId BIGINT, OUT sum INT, OUT fullSum INT)
 # BEGIN
 #     SELECT COUNT(*) INTO param1 FROM info_table.order_created;
 #     SELECT COUNT(*) INTO param2 FROM info_table.orders_id;
@@ -85,3 +118,11 @@ CREATE TABLE info_table
 # END$$
 #
 # DELIMITER ;
+
+# Trade data.
+#
+# Order Id
+#
+# Order Sum.
+#
+# as well we have to see all collected su during the user's history.

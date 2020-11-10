@@ -29,5 +29,7 @@ public abstract class Product implements Serializable {
 
     public abstract void setExpiredDate(LocalDate date);
 
+    public abstract long getId();
+
 
 }

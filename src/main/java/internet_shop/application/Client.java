@@ -10,15 +10,17 @@ public class Client {
 
     private CommandHandler commands;
     private Scanner in = new Scanner(System.in);
+    private User user;
 
     public void start() {
         try {
             ConnectBaseService.connect();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            log.error("Start log. " + e);
         }
         System.out.println("Please enter your name:");
         String userInput = in.nextLine();
+        user = new User(ConnectBaseService.getUserIdByName(userInput), userInput);
         File file = new File(userInput + ".ser");
         if (file.exists()) {
             try {
@@ -29,7 +31,8 @@ public class Client {
                 log.error("Start log. " + e);
             }
         }
-        else commands = new CommandHandler(userInput);
+        else commands = new CommandHandler(user);
+        System.out.println(user);
         System.out.println("Welcome in our internet shop, " + userInput + "!");
         System.out.println(SystemMessagesAndCommands.startProgramMessage + "\n");
         if (commands.getBucketSize() != 0) {

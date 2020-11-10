@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test;
 class CommandHandlerTest {
 
     CommandHandler commands;
+    User user;
 
     @BeforeEach
     void setUp() {
-        commands = new CommandHandler("Mike");
+        user = new User(1, "Mike");
+        commands = new CommandHandler(user);
     }
 
     @Test

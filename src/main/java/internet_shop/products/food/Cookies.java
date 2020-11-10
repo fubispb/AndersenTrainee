@@ -1,26 +1,35 @@
 package internet_shop.products.food;
 
+import internet_shop.application.ConnectBaseService;
 import internet_shop.currency.CurrencyStrategy;
 import internet_shop.currency.HryvniaStrategy;
 import internet_shop.products.ExpiringProduct;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class Cookies extends Food implements Serializable {
 
-    CurrencyStrategy currencyStrategy;
-    final String name = "Cookies";
-    int boughtPrice = 10;
+    private CurrencyStrategy currencyStrategy;
+    private final String name = "Cookies";
+    private int boughtPrice = 10;
+    private final long id;
     @ExpiringProduct
-    public LocalDate expiredDate;
+    private LocalDate expiredDate;
 
     public Cookies() {
         this.currencyStrategy = new HryvniaStrategy();
+        id = ConnectBaseService.getProductIdByName(name);
     }
 
+    @Override
+    public void setExpiredDate(LocalDate date) {
+        this.expiredDate = date;
+    }
 
     @Override
     public double getPrice() {
@@ -28,8 +37,8 @@ public class Cookies extends Food implements Serializable {
     }
 
     @Override
-    public void setExpiredDate(LocalDate date) {
-
+    public String toString() {
+        return name;
     }
 
 }

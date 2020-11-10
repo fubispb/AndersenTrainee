@@ -13,6 +13,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,10 +26,12 @@ public class CommandHandler implements Serializable {
     private final String clientName;
     private final Map<Product, Integer> bucket;
     private double currentBucketAmount;
+    User user;
 
-    public CommandHandler(String name) {
+    public CommandHandler(User user) {
+        this.user = user;
         warehouse = new Warehouse();
-        this.clientName = name;
+        this.clientName = user.getName();
         bucket = new HashMap<>();
     }
 
@@ -76,6 +79,15 @@ public class CommandHandler implements Serializable {
                         break;
                     case HELP:
                         System.out.println(SystemMessagesAndCommands.startProgramMessage);
+                        break;
+                    case CONFIRM:
+                        try {
+                            System.out.println("Your order is confirmed. Order id: " +
+                                    ConnectBaseService.confirmOrderAndGetId(bucket, user, currentBucketAmount));
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        clearBucket();
                         break;
                 }
             }
@@ -229,7 +241,7 @@ public class CommandHandler implements Serializable {
     }
 
     enum Commands {
-        EXIT, CLEAR, SHOWALL, SHOWBUCKET, HELP, ADD, DELETE
+        EXIT, CLEAR, SHOWALL, SHOWBUCKET, HELP, ADD, DELETE, CONFIRM
     }
 
 

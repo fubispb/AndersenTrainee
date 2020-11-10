@@ -60,7 +60,7 @@ public class Warehouse implements Serializable {
             if (field.isAnnotationPresent(ExpiringProduct.class)) {
                 field.setAccessible(true);
                 try {
-                    field.set(product, LocalDate.of(2020, 11, 31));
+                    field.set(product, LocalDate.of(2020, 11, 30));
                 } catch (IllegalAccessException e) {
                     log.error("Start log. " + e);
                 }

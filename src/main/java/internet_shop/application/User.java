@@ -3,8 +3,10 @@ package internet_shop.application;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class User {
+public class User implements Serializable {
 
     private final long id;
     private final String name;
