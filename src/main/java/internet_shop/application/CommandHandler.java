@@ -26,7 +26,7 @@ public class CommandHandler implements Serializable {
     private final String clientName;
     private final Map<Product, Integer> bucket;
     private double currentBucketAmount;
-    User user;
+    private User user;
 
     public CommandHandler(User user) {
         this.user = user;

@@ -21,7 +21,8 @@ public class SystemMessagesAndCommands {
             "delete productname - for deleting product from bucket. \n" +
             "clear - for clear your bucket. \n" +
             "exit - for exit programm. \n" +
-            "help - fot repeat start message.";
+            "help - fot repeat start message. \n" +
+            "info - fot for history of your orders.";
 
     public static String incorrectInput(String input) {
         if (Objects.nonNull(input)) return "Incorrect input: " + input + ". For help type help.";

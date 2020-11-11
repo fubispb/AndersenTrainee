@@ -33,7 +33,7 @@ public class ConnectBaseService {
 
     //Create order in base and return order id.
     public static long confirmOrderAndGetId(Map<Product, Integer> order, User user, double amount) throws SQLException {
-        long newId = 0;
+        long newId;
         statement.executeUpdate("" +
                 "INSERT INTO orders (`users_id`, `sum`, `processed`)"
                 + "VALUES (" + user.getId() + ", " + amount + ",  1)");
@@ -69,34 +69,18 @@ public class ConnectBaseService {
     public static long getUserIdByName(String userInput) {
         long result = 0;
         try {
-            ResultSet rs = statement.executeQuery("" +
+            preparedStatement = connection.prepareStatement("" +
                     "SELECT id " +
                     "FROM my_shop.users " +
-                    "WHERE name = '" + userInput + "';");
+                    "WHERE name = ?;");
+            preparedStatement.setString(1, userInput);
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) result = rs.getLong("id");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (result == 0) result = ConnectBaseService.addNewUserByName(userInput);
-        return result;
-    }
-
-    //Add new user by input and return id
-    private static long addNewUserByName(String userInput) {
-        long id = 0;
-        try {
-            statement.executeUpdate("" +
-                    "INSERT INTO users (name)" +
-                    "VALUES ('" + userInput + "');");
-            ResultSet rs = statement.executeQuery("" +
-                    "SELECT max(id) " +
-                    "FROM users;");
-            rs.next();
-            id = rs.getLong(1);
         } catch (SQLException e) {
             log.error("Start log. " + e);
         }
-        return id;
+        if (result == 0) result = ConnectBaseService.addNewUserByName(userInput);
+        return result;
     }
 
     public static long getProductIdByName(String name) {
@@ -134,7 +118,25 @@ public class ConnectBaseService {
         System.out.println(userInfo);
     }
 
-    public static String getOrderContainsById(long id) {
+    //Add new user by input and return id
+    private static long addNewUserByName(String userInput) {
+        long id = 0;
+        try {
+            statement.executeUpdate("" +
+                    "INSERT INTO users (name)" +
+                    "VALUES ('" + userInput + "');");
+            ResultSet rs = statement.executeQuery("" +
+                    "SELECT max(id) " +
+                    "FROM users;");
+            rs.next();
+            id = rs.getLong(1);
+        } catch (SQLException e) {
+            log.error("Start log. " + e);
+        }
+        return id;
+    }
+
+    private static String getOrderContainsById(long id) {
         StringBuilder result = new StringBuilder();
         try {
             ResultSet rs = statement.executeQuery("" +
