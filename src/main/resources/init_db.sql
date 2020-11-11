@@ -77,8 +77,8 @@ CREATE TABLE info_table
     `users_id`                BIGINT NOT NULL,
     `order_id`                BIGINT NULL,
     `processed`               TINYINT NULL,
-    `order_created`           TIMESTAMP NULL DEFAULT NOW(),
     `order_sum`               INT NULL,
+    `order_created`           TIMESTAMP NULL DEFAULT NOW(),
     PRIMARY KEY               (`id`)
 );
 
@@ -93,6 +93,7 @@ INSERT INTO products (`name`, `price`) VALUES ('Computer', '250');
 INSERT INTO products (`name`, `price`) VALUES ('Table', '70');
 
 
+DELIMITER $$
 CREATE DEFINER = CURRENT_USER TRIGGER `orders_AFTER_INSERT`
 AFTER INSERT ON `orders` FOR EACH ROW
 BEGIN
@@ -102,27 +103,17 @@ INSERT INTO info_table SET
                              order_created = NEW.`date_created`,
                              processed = NEW.processed,
                              order_sum = NEW.sum;
-END
+END$$
+DELIMITER ;
 
-#
-# USE `my_shop`;
-# DROP procedure IF EXISTS `info_user`;
-#
-# DELIMITER $$
-# USE `my_shop`$$
-# CREATE PROCEDURE `info_user` (IN id BIGINT, OUT data TIMESTAMP, OUT orderId BIGINT, OUT sum INT, OUT fullSum INT)
-# BEGIN
-#     SELECT COUNT(*) INTO param1 FROM info_table.order_created;
-#     SELECT COUNT(*) INTO param2 FROM info_table.orders_id;
-#     SELECT COUNT(*) INTO param3 FROM info_table.`data`;
-# END$$
-#
-# DELIMITER ;
 
-# Trade data.
-#
-# Order Id
-#
-# Order Sum.
-#
-# as well we have to see all collected su during the user's history.
+USE `my_shop`;
+DROP procedure IF EXISTS `info_user`;
+DELIMITER $$
+USE `my_shop`$$
+CREATE PROCEDURE `info_user`(IN id BIGINT, OUT param1 INT, OUT param2 INT)
+BEGIN
+    SELECT count(order_id) INTO param1 FROM info_table WHERE users_id = id;
+    SELECT sum(order_sum) INTO param2 FROM info_table WHERE users_id = id;
+END$$
+DELIMITER ;

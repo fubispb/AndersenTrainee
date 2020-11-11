@@ -8,7 +8,7 @@ import java.util.Objects;
 public class SystemMessagesAndCommands {
 
     public final static List<String> listOfSingleCommands = Arrays.asList("exit", "clear", "showall",
-            "showbucket", "help", "confirm");
+            "showbucket", "help", "confirm", "info");
 
     public final static String addCommand = "add";
     public final static String deleteCommand = "delete";

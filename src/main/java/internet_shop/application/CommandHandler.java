@@ -89,6 +89,9 @@ public class CommandHandler implements Serializable {
                         }
                         clearBucket();
                         break;
+                    case INFO:
+                        ConnectBaseService.userInfo(user);
+                        break;
                 }
             }
         } catch (IllegalArgumentException e) {
@@ -241,7 +244,7 @@ public class CommandHandler implements Serializable {
     }
 
     enum Commands {
-        EXIT, CLEAR, SHOWALL, SHOWBUCKET, HELP, ADD, DELETE, CONFIRM
+        EXIT, CLEAR, SHOWALL, SHOWBUCKET, HELP, ADD, DELETE, CONFIRM, INFO
     }
 
 
