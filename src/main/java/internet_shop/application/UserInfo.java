@@ -5,7 +5,6 @@ import internet_shop.products.Product;
 import java.util.Map;
 
 public class UserInfo {
-    //TODO
     User user;
     String orderContains;
     int orderCounts;

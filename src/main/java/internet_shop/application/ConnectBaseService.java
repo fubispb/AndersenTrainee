@@ -33,10 +33,15 @@ public class ConnectBaseService {
 
     //Create order in base and return order id.
     public static long confirmOrderAndGetId(Map<Product, Integer> order, User user, double amount) throws SQLException {
-        long newId = getLastOrderIdByUser(user) + 1;
+        long newId = 0;
         statement.executeUpdate("" +
-                "INSERT INTO orders (`order_id`, `users_id`, `sum`, `processed`)"
-                + "VALUES (" + newId + ", " + user.getId() + ", " + amount + ",  1)");
+                "INSERT INTO orders (`users_id`, `sum`, `processed`)"
+                + "VALUES (" + user.getId() + ", " + amount + ",  1)");
+        ResultSet rs = statement.executeQuery("" +
+                    "SELECT max(order_id) " +
+                    "FROM orders;");
+        rs.next();
+        newId = rs.getLong(1);
         connection.setAutoCommit(false);
         for (Map.Entry<Product, Integer> set : order.entrySet()) {
             String query = String.format("INSERT INTO order_products (`order_id`, `products_id`, `count`)"
@@ -47,7 +52,7 @@ public class ConnectBaseService {
         return newId;
     }
 
-    public static String getUserByID(long id) {
+    public static String getUserNameByID(long id) {
         String result = null;
         try {
             ResultSet rs = statement.executeQuery("" +
@@ -70,9 +75,28 @@ public class ConnectBaseService {
                     "WHERE name = '" + userInput + "';");
             while (rs.next()) result = rs.getLong("id");
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (result == 0) result = ConnectBaseService.addNewUserByName(userInput);
+        return result;
+    }
+
+    //Add new user by input and return id
+    private static long addNewUserByName(String userInput) {
+        long id = 0;
+        try {
+            statement.executeUpdate("" +
+                    "INSERT INTO users (name)" +
+                    "VALUES ('" + userInput + "');");
+            ResultSet rs = statement.executeQuery("" +
+                    "SELECT max(id) " +
+                    "FROM users;");
+            rs.next();
+            id = rs.getLong(1);
+        } catch (SQLException e) {
             log.error("Start log. " + e);
         }
-        return result;
+        return id;
     }
 
     public static long getProductIdByName(String name) {
@@ -89,24 +113,10 @@ public class ConnectBaseService {
         return result;
     }
 
-    private static long getLastOrderIdByUser(User user) {
-        long result = 0;
-        try {
-            ResultSet rs = statement.executeQuery("" +
-                    "SELECT max(order_id) " +
-                    "FROM my_shop.orders " +
-                    "WHERE users_id = '" + user.getId() + "';");
-            while (rs.next()) result = rs.getLong(1);
-        } catch (SQLException e) {
-            log.error("Start log. " + e);
-        }
-        return result;
-    }
-
     public static void userInfo(User user) {
         UserInfo userInfo = new UserInfo(user);
         StringBuilder result = new StringBuilder();
-        List<Long> list = ConnectBaseService.getOrderNumbersByUser(user);
+        List<Long> list = ConnectBaseService.getOrdersNumbersByUser(user);
         for (Long numbers : list) {
             result.append(getOrderContainsById(numbers)).append("\n");
         }
@@ -119,7 +129,7 @@ public class ConnectBaseService {
             userInfo.orderCounts = call.getInt(2);
             userInfo.totalSum = call.getInt(3);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Start log. " + e);
         }
         System.out.println(userInfo);
     }
@@ -145,12 +155,12 @@ public class ConnectBaseService {
             rs.next();
             result.append("Order sum = ").append(rs.getInt(1)).append("\n");
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Start log. " + e);
         }
         return result.toString();
     }
 
-    private static List<Long> getOrderNumbersByUser(User user) {
+    private static List<Long> getOrdersNumbersByUser(User user) {
         List<Long> list = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("" +
@@ -161,7 +171,7 @@ public class ConnectBaseService {
                 list.add(rs.getLong(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Start log. " + e);
         }
         return list;
     }

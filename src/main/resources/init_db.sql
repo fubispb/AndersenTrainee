@@ -16,7 +16,7 @@ CREATE TABLE users
 
 CREATE TABLE orders
 (
-    `order_id`                BIGINT NOT NULL,
+    `order_id`                BIGINT NOT NULL AUTO_INCREMENT,
     `users_id`                BIGINT NOT NULL,
     `processed`               TINYINT NULL,
     `sum`                     INT NULL,
