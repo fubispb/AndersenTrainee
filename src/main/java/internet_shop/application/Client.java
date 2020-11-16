@@ -1,5 +1,6 @@
 package internet_shop.application;
 
+import internet_shop.application.model.User;
 import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class Client {
         connectBase();
         System.out.println("Please enter your name:");
         String userInput = userInput();
-        user = new User(ConnectBaseService.getUserIdByName(userInput), userInput);
+        //user = new User(ConnectBaseService.getUserIdByName(userInput), userInput);
         File file = new File(userInput + ".ser");
         if (file.exists()) {
             try {

@@ -1,5 +1,6 @@
 package internet_shop.application;
 
+import internet_shop.application.model.User;
 import internet_shop.products.food.Apple;
 import internet_shop.products.food.Coffee;
 import internet_shop.products.food.Cookies;

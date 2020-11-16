@@ -1,7 +1,7 @@
 package internet_shop.application;
 
+import internet_shop.application.model.User;
 import internet_shop.products.Product;
-import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class ConnectBaseService {
 
     public static void connect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost/my_shop", "admin", "123456");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/my_shop", "root", "QQferrari9900");
         statement = connection.createStatement();
     }
 

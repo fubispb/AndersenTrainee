@@ -28,20 +28,4 @@ public class ProductDAO {
         }
         return list;
     }
-
-    public void insertInUserBucket(long id, int count) {
-        try {
-            ConnectBaseService.connect();
-            PreparedStatement preparedStatement = ConnectBaseService.connection.prepareStatement("" +
-                    "INSERT INTO buckets (users_id, products_id, count)" +
-                    "VALUES (?, ?, ?);");
-            preparedStatement.setLong(1, 1);
-            preparedStatement.setLong(2, id);
-            preparedStatement.setLong(3, count);
-            preparedStatement.executeQuery();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-
-        }
-    }
 }

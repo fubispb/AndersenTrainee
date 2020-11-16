@@ -1,5 +1,7 @@
 package internet_shop.application;
 
+import internet_shop.application.model.User;
+
 public class UserInfo {
     User user;
     String orderContains;

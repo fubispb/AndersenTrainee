@@ -1,6 +1,7 @@
 package internet_shop.application;
 
 import internet_shop.application.model.Product;
+import internet_shop.application.service.BucketService;
 import internet_shop.application.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -13,10 +14,12 @@ import java.util.List;
 public class GoodListServlet extends HttpServlet {
 
     private static final long serialVersionUID = -5293374759761138358L;
-    ProductService productService;
+    private ProductService productService;
+    private BucketService bucketService;
 
     public GoodListServlet() {
-        this.productService = new ProductService();
+        this.productService = ProductService.getInstance();
+        this.bucketService = BucketService.getInstance();
     }
 
     @Override
@@ -28,9 +31,10 @@ public class GoodListServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int count = Integer.parseInt(req.getParameter("count"));
         long id = Long.parseLong(req.getParameter("id"));
-        productService.insertInBucketByProductId(id, count);
+        bucketService.insertInBucketByProductId(id, count);
+        resp.sendRedirect("goodlist");
     }
 }

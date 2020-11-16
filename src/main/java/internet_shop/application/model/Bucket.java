@@ -1,6 +1,5 @@
 package internet_shop.application.model;
 
-import internet_shop.application.User;
 import lombok.Data;
 
 import java.util.Map;
