@@ -20,7 +20,7 @@ public class Chair extends NotFood implements Serializable {
 
     public Chair() {
         this.currencyStrategy = new HryvniaStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 5;
     }
 
     @Override

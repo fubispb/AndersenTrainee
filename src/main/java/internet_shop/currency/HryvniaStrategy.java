@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class HryvniaStrategy implements CurrencyStrategy, Serializable {
 
+    private static final long serialVersionUID = -4427718295806950701L;
     private final String CODE = "UAH";
     private final String NAME = "hryvnia";
     private double course = 1;

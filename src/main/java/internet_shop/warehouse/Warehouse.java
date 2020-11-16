@@ -11,48 +11,48 @@ import internet_shop.products.not_food.Computer;
 import internet_shop.products.not_food.Table;
 import lombok.extern.slf4j.Slf4j;
 
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class Warehouse implements Serializable {
 
-    public Map<Product, Integer> products;
+    private static final long serialVersionUID = -295023693329265315L;
+    public List<Product> products;
 
     public Warehouse() {
 
-        this.products = new HashMap<>();
+        products = new ArrayList<>();
         Apple apple = new Apple();
         checkBeforeStock(apple);
-        products.put(apple, 20);
+        products.add(apple);
 
         Coffee coffee = new Coffee();
         checkBeforeStock(coffee);
-        products.put(coffee, 15);
+        products.add(coffee);
 
         Cookies cookies = new Cookies();
         checkBeforeStock(cookies);
-        products.put(cookies, 100);
+        products.add(cookies);
 
         Parmalat parmalat = new Parmalat();
         checkBeforeStock(parmalat);
-        products.put(parmalat, 40);
+        products.add(parmalat);
 
         Chair chair = new Chair();
         checkBeforeStock(chair);
-        products.put(chair, 8);
+        products.add(chair);
 
         Computer computer = new Computer();
         checkBeforeStock(computer);
-        products.put(computer, 7);
+        products.add(computer);
 
         Table table = new Table();
         checkBeforeStock(table);
-        products.put(table, 3);
+        products.add(table);
     }
 
     private void checkBeforeStock(Product product) {

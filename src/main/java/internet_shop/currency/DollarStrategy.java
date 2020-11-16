@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class DollarStrategy implements CurrencyStrategy, Serializable {
 
+    private static final long serialVersionUID = 6099743848133749086L;
     private final String CODE = "USD";
     private final String NAME = "dollar";
     private double course = 28.3;

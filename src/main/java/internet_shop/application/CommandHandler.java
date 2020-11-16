@@ -22,6 +22,7 @@ import java.util.Objects;
 @ToString
 public class CommandHandler implements Serializable {
 
+    private static final long serialVersionUID = -7037350349397899318L;
     private Warehouse warehouse;
     private final String clientName;
     private final Map<Product, Integer> bucket;

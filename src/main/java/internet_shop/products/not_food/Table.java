@@ -20,7 +20,7 @@ public class Table extends NotFood implements Serializable {
 
     public Table() {
         this.currencyStrategy = new DollarStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 7;
     }
 
     @Override

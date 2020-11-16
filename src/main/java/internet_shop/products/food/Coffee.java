@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Coffee extends Food implements Serializable {
 
+    private static final long serialVersionUID = 1211829928200266914L;
     private CurrencyStrategy currencyStrategy;
     private final String name = "Coffee";
     private int boughtPrice = 80;
@@ -23,7 +24,7 @@ public class Coffee extends Food implements Serializable {
 
     public Coffee() {
         this.currencyStrategy = new DollarStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 2;
     }
 
     @Override

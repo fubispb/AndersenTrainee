@@ -1,9 +1,5 @@
 package internet_shop.application;
 
-import internet_shop.products.Product;
-
-import java.util.Map;
-
 public class UserInfo {
     User user;
     String orderContains;

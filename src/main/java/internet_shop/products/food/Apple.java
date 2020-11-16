@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Apple extends Food implements Serializable {
 
+    private static final long serialVersionUID = 5311393141525536933L;
     private CurrencyStrategy currencyStrategy;
     private final String name = "Apple";
     private int boughtPrice = 30;
@@ -23,7 +24,7 @@ public class Apple extends Food implements Serializable {
 
     public Apple() {
         this.currencyStrategy = new HryvniaStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 1;
     }
 
     @Override

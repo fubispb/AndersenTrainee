@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Parmalat extends Milk implements Serializable {
 
+    private static final long serialVersionUID = 8459313424756425501L;
     private CurrencyStrategy currencyStrategy;
     private final String name = "Parmalat";
     private int boughtPrice = 25;
@@ -23,7 +24,7 @@ public class Parmalat extends Milk implements Serializable {
 
     public Parmalat() {
         this.currencyStrategy = new HryvniaStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 4;
     }
 
     @Override

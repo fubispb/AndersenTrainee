@@ -20,7 +20,7 @@ public class Computer extends NotFood implements Serializable {
 
     public Computer() {
         this.currencyStrategy = new DollarStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 6;
     }
 
     @Override

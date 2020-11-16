@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Data
 public class Cookies extends Food implements Serializable {
 
+    private static final long serialVersionUID = -2024697128988416282L;
     private CurrencyStrategy currencyStrategy;
     private final String name = "Cookies";
     private int boughtPrice = 10;
@@ -23,7 +24,7 @@ public class Cookies extends Food implements Serializable {
 
     public Cookies() {
         this.currencyStrategy = new HryvniaStrategy();
-        id = ConnectBaseService.getProductIdByName(name);
+        id = 3;
     }
 
     @Override

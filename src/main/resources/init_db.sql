@@ -57,10 +57,9 @@ CREATE TABLE order_products (
 
 CREATE TABLE buckets
 (
-    `id`                      BIGINT NOT NULL AUTO_INCREMENT,
     `users_id`                BIGINT NOT NULL,
     `products_id`             BIGINT NULL,
-    PRIMARY KEY               (`id`),
+    `count`                   INTEGER NULL,
     FOREIGN KEY               (users_id)
     REFERENCES                users (id)
     ON DELETE                 NO ACTION

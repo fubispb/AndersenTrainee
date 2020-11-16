@@ -10,6 +10,7 @@ import java.util.List;
 @EqualsAndHashCode
 public abstract class Product implements Serializable {
 
+    private static final long serialVersionUID = -7565655957307139235L;
     public static List<String> listOfProducts = Arrays.asList("Apple", "Coffee", "Cookies", "Chair", "Computer", "Table", "Parmalat");
 
     String name;

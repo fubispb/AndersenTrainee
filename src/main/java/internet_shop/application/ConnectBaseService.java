@@ -8,26 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class ConnectBaseService {
 
-    private static Connection connection;
-    private static Statement statement;
+    public static Connection connection;
+    public static Statement statement;
     private static PreparedStatement preparedStatement;
 
 
     public static void connect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost/my_shop", "root", "QQferrari9900");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/my_shop", "admin", "123456");
         statement = connection.createStatement();
-        System.out.println("Connection to data base established.");
     }
 
     public static void disconnect() {
         try {
             connection.close();
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
     }
 
@@ -61,7 +59,7 @@ public class ConnectBaseService {
                     "WHERE id = " + id + ";");
             while (rs.next()) result = rs.getString("name");
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         return result;
     }
@@ -77,7 +75,7 @@ public class ConnectBaseService {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) result = rs.getLong("id");
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         if (result == 0) result = ConnectBaseService.addNewUserByName(userInput);
         return result;
@@ -88,11 +86,11 @@ public class ConnectBaseService {
         try {
             ResultSet rs = statement.executeQuery("" +
                     "SELECT product_id " +
-                    "FROM my_shop.products " +
+                    "FROM products " +
                     "WHERE name = '" + name + "';");
             while (rs.next()) result = rs.getLong("product_id");
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         return result;
     }
@@ -113,7 +111,7 @@ public class ConnectBaseService {
             userInfo.orderCounts = call.getInt(2);
             userInfo.totalSum = call.getInt(3);
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         System.out.println(userInfo);
     }
@@ -131,7 +129,7 @@ public class ConnectBaseService {
             rs.next();
             id = rs.getLong(1);
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         return id;
     }
@@ -157,7 +155,7 @@ public class ConnectBaseService {
             rs.next();
             result.append("Order sum = ").append(rs.getInt(1)).append("\n");
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         return result.toString();
     }
@@ -173,7 +171,7 @@ public class ConnectBaseService {
                 list.add(rs.getLong(1));
             }
         } catch (SQLException e) {
-            log.error("Start log. " + e);
+            e.printStackTrace();
         }
         return list;
     }

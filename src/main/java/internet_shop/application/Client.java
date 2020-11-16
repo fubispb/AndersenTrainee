@@ -13,13 +13,9 @@ public class Client {
     private User user;
 
     public void start() {
-        try {
-            ConnectBaseService.connect();
-        } catch (ClassNotFoundException | SQLException e) {
-            log.error("Start log. " + e);
-        }
+        connectBase();
         System.out.println("Please enter your name:");
-        String userInput = in.nextLine();
+        String userInput = userInput();
         user = new User(ConnectBaseService.getUserIdByName(userInput), userInput);
         File file = new File(userInput + ".ser");
         if (file.exists()) {
@@ -41,10 +37,22 @@ public class Client {
         }
         while (true) {
             System.out.println("Enter command: ");
-            userInput = in.nextLine();
+            userInput = userInput();
             commands.userCommandHandler(userInput);
         }
 
+    }
+
+    private String userInput() {
+        return in.nextLine();
+    }
+
+    private void connectBase(){
+        try {
+            ConnectBaseService.connect();
+        } catch (ClassNotFoundException | SQLException e) {
+            log.error("Start log. " + e);
+        }
     }
 
     public static void main(String[] args) {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <servlet>
+        <servlet-name>mainServlet</servlet-name>
+        <servlet-class>internet_shop.application.MainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mainServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>bucketServlet</servlet-name>
+        <servlet-class>internet_shop.application.BucketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>bucketServlet</servlet-name>
+        <url-pattern>/bucket</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>goodListServlet</servlet-name>
+        <servlet-class>internet_shop.application.GoodListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>goodListServlet</servlet-name>
+        <url-pattern>/goodlist</url-pattern>
+    </servlet-mapping>
+
+</web-app>
